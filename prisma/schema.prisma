@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// schema.prisma
+
+// Define the Customer model
+// schema.prisma
+
+// Define the Customer model
+model Customer {
+  id          Int     @id @map("_id") // Map the ID field to the MongoDB _id field
+  name        String
+  email       String  @unique
+  address     String?
+  postcode    String?
+  phoneNumber String?
+  orders      Order[]
+}
+
+// Define the Order model
+model Order {
+  id          Int      @id @map("_id") // Use auto() to generate unique integer IDs
+  orderNumber String
+  totalAmount Float
+  orderStatus String
+  customerId  Int
+  customer    Customer @relation(fields: [customerId], references: [id])
+  ProductName String
+}
